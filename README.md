@@ -1,5 +1,21 @@
 # Manhwa Update Tracker
 
+## 📜 Table of Contents
+
+1.  [Overview](#overview)
+2.  [The Problem Solved](#the-problem-solved)
+3.  [✨ Core Features](#-core-features)
+4.  [🎁 Creating a Distributable File (ZIP or XPI)](#-creating-a-distributable-file-zip-or-xpi)
+5.  [🚀 Installation](#-installation)
+6.  [📖 Usage Guide](#-usage-guide)
+7.  [🛠️ How It Works (High-Level)](#️-how-it-works-high-level)
+8.  [🎨 Styling and Theming](#-styling-and-theming)
+9.  [📂 Key Files and Their Roles](#-key-files-and-their-roles)
+10. [⚙️ How It Works (Detailed Architecture)](#️-how-it-works-detailed-architecture)
+11. [💡 Notable Challenges & Solutions](#-notable-challenges--solutions-during-development)
+12. [❤️ Contributing](#️-contributing)
+13. [📜 License](#-license)
+
 ## Overview
 
 Manhwa Update Tracker is a browser extension designed to help users keep track of the latest chapters for their favorite manhwa, manga, webtoons, and other sequential web comics. It automates the process of checking multiple websites for updates, manages your reading progress by tracking the last read chapter, and notifies you of new releases. The extension is built with a flexible parsing system to accommodate various website structures and offers a user-friendly interface for managing your tracked series and viewing updates.
@@ -19,75 +35,151 @@ This extension aims to solve these problems by:
 
 *   **Comprehensive Series Tracking:** Add and manage a list of manhwa/manga series from any website.
 *   **Automated New Chapter Detection:** Fetches and parses websites to find the latest available chapter.
-*   **Intelligent Last Read Chapter Management:**
-    *   Uses browser history (on PC) or a dedicated internal history log (primarily for mobile or as a fallback).
-    *   Updates the `lastReadChapter` as new chapters are detected or history indicates further reading.
-*   **Flexible Parsing Engine:**
-    *   Utilizes a refined regex for general chapter number extraction.
-    *   Supports CSS selector-based parsing, with a default for common WordPress (Madara) manga themes.
-    *   Implements site-specific logic, including AJAX calls for dynamic content (e.g., MangaForFree).
-    *   Specialized parsing strategies for sites like Bato.to/Mto.to.
-    *   Fallback mechanism to open pages in a new tab for parsing if direct fetch fails.
-*   **Environment-Aware History:**
-    *   Detects if running in a PC or mobile-like environment.
-    *   Uses standard browser history on PC for robust chapter tracking.
-    *   Employs a custom, extension-exclusive history log on mobile (where browser history API might be limited/unavailable).
-*   **Selective Checking:**
-    *   Option to check all tracked series.
-    *   Option to check only series within selected browser bookmark folders.
+*   **Intelligent Last Read Chapter Management:** Uses browser history (PC) or an internal log (mobile/fallback) and updates as you read or as new chapters are found.
+*   **Flexible Parsing Engine:** Combines regex, CSS selectors (with a default for WordPress/Madara themes), site-specific AJAX calls (e.g., MangaForFree), and specialized Bato.to logic.
+*   **Environment-Aware History:** Chooses the best history source (browser vs. custom log) based on PC or mobile environment detection.
+*   **Selective Checking:** Check all series or only those in selected browser bookmark folders.
 *   **Detailed & Organized Update Display (`updates.html`):**
-    *   Shows results categorized into "New Chapters Found" and "No New Chapters / Up-to-date".
-    *   Groups series by their bookmark folder.
-    *   Displays series title (linkable), latest chapter found, and your last read chapter.
-    *   Foldable folder sections for better organization.
-    *   Shows overall check status, duration, and environment/history source used.
-*   **User-Friendly Interface:**
-    *   **Popup (`popup.html`):** Main interaction point, opened as a full tab. Provides quick check buttons, folder selection for checks, and navigation to other extension pages.
-    *   **Options Page (`options.html`):** Manage your manhwa list (add, edit, delete), configure site-specific CSS selectors, import/export your list.
-    *   **Custom History Viewer (`custom_history.html`):** Allows viewing the raw data from the internal history logger, primarily for mobile debugging.
-*   **Import/Export Functionality:**
-    *   Export your tracked manhwa list (including titles, URLs, last read chapters, site-specific configurations, and bookmark folder info) to a JSON file.
-    *   Import a previously exported list to restore your settings or transfer to another browser.
-*   **Mobile Optimization:** All UI pages (`popup.html`, `options.html`, `updates.html`) are designed to be responsive and usable on smaller screens.
-*   **Consistent Theming:** Features a "Frutiger Aero" inspired theme for a distinct visual style, applied consistently across its pages.
+    *   Categorizes series with new chapters and those up-to-date.
+    *   Groups series by bookmark folder (collapsible).
+    *   Displays series title (linkable), latest chapter, and last read chapter.
+    *   Shows overall check status, duration, and environment/history source.
+*   **User-Friendly Interface (`popup.html`, `options.html`, `custom_history.html`):**
+    *   Main popup (full tab) for quick checks, folder selection, and navigation.
+    *   Options page for list management, site-specific configurations, and import/export.
+    *   Custom history viewer for mobile debugging.
+*   **Import/Export Functionality:** Save and load your tracked series list (including all details) as a JSON file.
+*   **Mobile Optimization:** Responsive design for all extension pages.
+*   **Consistent Theming:** A "Frutiger Aero" inspired theme across all UI.
+
+## 🎁 Creating a Distributable File (ZIP or XPI)
+
+If you need to package the extension files, for example, to share it, back it up, or prepare for certain installation methods, you can create a ZIP or an XPI file.
+
+### 1. Creating a ZIP file
+
+A ZIP file is a standard archive format that can be used to bundle the extension files. Most browsers that support loading unpacked extensions can handle a ZIP file if you extract it first.
+
+1.  **Gather all extension files:** Ensure you have all the necessary files and folders for the extension. This includes:
+    *   `manifest.json` (this is crucial)
+    *   All JavaScript files (`background.js`, `popup.js`, `options.js`, etc.)
+    *   All HTML files (`popup.html`, `options.html`, etc.)
+    *   All CSS files (`style.css`, etc.)
+    *   Any assets like icon folders (e.g., `icons/`)
+    *   Any other supporting files or directories at the root level of your extension project.
+2.  **Select the files:** In your file explorer, select all these root files and folders.
+3.  **Create the ZIP archive:**
+    *   **Windows:** Right-click on the selected files, then choose "Send to" > "Compressed (zipped) folder".
+    *   **macOS:** Right-click (or Ctrl-click) on the selected files, then choose "Compress [number] items".
+    *   **Linux:** This varies by distribution and file manager, but typically you can right-click and find a "Compress" or "Create Archive" option. Alternatively, use the `zip` command in the terminal: `zip -r your-extension-name.zip ./*` (make sure you are inside the extension's root directory).
+4.  **Important:** The `manifest.json` file **must be at the root level** inside the ZIP archive, not within a subfolder created by the zipping process (e.g., not like `your-extension-name/manifest.json` inside the zip, but just `manifest.json`).
+
+### 2. Creating an XPI file (for Firefox)
+
+An XPI (pronounced "zippy") file is the installation package format for Firefox add-ons. It's essentially a ZIP file with a different extension.
+
+**Method A: Using `web-ext`**
+
+`web-ext` is a command-line tool developed by Mozilla to help with building, running, and testing WebExtensions.
+
+1.  **Install Node.js and npm:** If you don't have them, install Node.js (which includes npm) from [nodejs.org](https://nodejs.org/).
+2.  **Install `web-ext`:** Open your terminal or command prompt and run:
+    ```bash
+    npm install --global web-ext
+    ```
+3.  **Navigate to your extension's directory:** In the terminal, change to the root directory of your Manhwa Update Tracker extension (the one containing `manifest.json`).
+    ```bash
+    cd path/to/your/manhwa-update-tracker
+    ```
+4.  **Build the extension:** Run the following command:
+    ```bash
+    web-ext build
+    ```
+5.  This command will package your extension into an XPI file. By default, it will be placed in a new directory called `web-ext-artifacts` inside your extension's root directory. The file will likely be named something like `manhwa_checker-0.5.0.xpi` (version number may vary).
+6.  The XPI created by `web-ext build` might be unsigned or self-signed. For distribution on the Mozilla Add-ons (AMO) site, it would need to go through their submission and signing process. For local installation, an unsigned XPI will require the Firefox Developer/Nightly settings mentioned in the Installation section below.
+
+**Method B: Manually Creating an XPI**
+
+If you can't use `web-ext` or prefer a manual approach:
+
+1.  **Create a ZIP file:** Follow all the steps in "1. Creating a ZIP file" above, ensuring `manifest.json` is at the root of the archive.
+2.  **Rename the file:** Simply rename the generated `.zip` file to have an `.xpi` extension. For example, if you have `my-extension.zip`, rename it to `my-extension.xpi`.
+
+    *   **Note:** An XPI file created this way is unsigned. To install it in Firefox, you will typically need to use Firefox Developer Edition or Nightly and set `xpinstall.signatures.required` to `false` in `about:config` (as detailed in the Installation section below).
 
 ## 🚀 Installation
 
-1.  Download the extension files to a local directory.
-2.  Open your browser's extension management page:
-    *   **Chrome/Edge:** Navigate to `chrome://extensions` or `edge://extensions`.
-    *   **Firefox:** Navigate to `about:addons`.
-3.  Enable "Developer mode" (usually a toggle switch).
-4.  Click on "Load unpacked" (Chrome/Edge) or "Load Temporary Add-on..." (Firefox) and select the directory where you saved the extension files.
-5.  The Manhwa Update Tracker icon should appear in your browser's toolbar.
+This extension is primarily intended for development or personal use as it is not currently hosted on official add-on stores. Here's how to install it:
+
+**Method 1: Loading Unpacked (Recommended for Development & Most Users)**
+
+1.  **Download/Clone the Source Code:**
+    *   Clone this repository to a local directory: `git clone https://github.com/your-username/manhwa-update-tracker.git` (replace with your actual repository URL if different).
+    *   Alternatively, download the source code as a ZIP file from GitHub (usually via the "Code" button -> "Download ZIP") and extract it to a local directory.
+2.  **Open Your Browser's Extension Page:**
+    *   **Chrome / Edge / Other Chromium-based browsers:** Navigate to `chrome://extensions` or `edge://extensions`.
+    *   **Firefox:** Navigate to `about:debugging#/runtime/this-firefox`.
+3.  **Enable Developer Mode (if applicable):**
+    *   **Chrome/Edge:** Ensure the "Developer mode" toggle (usually in the top right corner) is switched ON.
+    *   **Firefox:** This step is not explicitly needed on the `about:debugging` page for loading temporary add-ons.
+4.  **Load the Extension:**
+    *   **Chrome/Edge:** Click the "Load unpacked" button and select the root directory where you cloned/extracted the extension files (this is the directory that contains the `manifest.json` file).
+    *   **Firefox:** Click the "Load Temporary Add-on..." button and select the `manifest.json` file from the root directory of the extension. The add-on will remain installed until you close Firefox or remove it manually from this page.
+5.  The Manhwa Update Tracker icon should now appear in your browser's toolbar.
+
+**Method 2: Persistent Installation of Unsigned Extensions in Firefox Developer/Nightly (Advanced)**
+
+Standard versions of Firefox enforce add-on signing, meaning they typically won't allow the persistent installation or use of unsigned extensions (including those loaded from local files like ZIPs/XPIs if not from AMO or signed).
+
+However, **Firefox Developer Edition** or **Firefox Nightly** versions allow you to disable this signature check for development and testing purposes. This is useful if you want to load the extension from local files—for example, if you've **downloaded the extension as a ZIP file and unpacked it**, are working directly from a cloned development folder, or have self-packaged an XPI—and want it to persist more like a regularly installed add-on without needing it to be signed by Mozilla.
+
+**Warning:** Disabling signature checks can lower your browser's security. Only do this if you understand the risks and are using a Firefox version intended for development (Developer Edition or Nightly).
+
+1.  **Use Firefox Developer Edition or Nightly:** Ensure you are running one of these specific versions of Firefox.
+2.  **Access `about:config`:**
+    *   Type `about:config` into the Firefox address bar and press Enter.
+    *   Click "Accept the Risk and Continue" if a warning page appears.
+3.  **Modify Signature Setting:**
+    *   In the search bar at the top of the `about:config` page, type `xpinstall.signatures.required`.
+    *   Double-click on the `xpinstall.signatures.required` preference to toggle its value from `true` to `false`.
+4.  **Install/Load the Extension:**
+    *   **Installing a packaged extension (ZIP or XPI) using Firefox's "Install Add-on From File..." option:**
+        a.  First, navigate to `about:addons` in Firefox. Click the gear icon (⚙️) next to "Manage Your Extensions", and select "Install Add-on From File...". A file selection dialog will open.
+        b.  **If you have your extension packaged as a `.zip` file:** Try selecting this `.zip` file directly in the file dialog.
+        c.  **If Firefox does not allow you to select the `.zip` file, or if the installation directly from the `.zip` file fails:**
+            i.  You will likely need to rename your `.zip` file to have an `.xpi` extension (e.g., change `your-extension-name.zip` to `your-extension-name.xpi`).
+            ii. Then, in the "Install Add-on From File..." dialog, select this newly renamed `.xpi` file.
+        d.  **If you already have an `.xpi` file** (e.g., one created using `web-ext` or by previously renaming a `.zip`): You can select this `.xpi` file directly in the file dialog.
+    *   Alternatively, loading the extension unpacked (as described in Method 1, **which includes starting from an extracted ZIP file**) in Firefox Developer/Nightly with this flag set to `false` should also allow it to operate without signature issues and persist more reliably across browser sessions than a standard temporary add-on might.
+
+For more details on add-on signing in Firefox, refer to the official Mozilla documentation: [Add-on signing in Firefox | Firefox Help](https://support.mozilla.org/en-US/kb/add-on-signing-in-firefox).
+
+**Note on Updates (for unpacked extensions):** If you modify the local code (e.g., after pulling changes or making your own edits), you generally need to reload the extension for the changes to take effect. This is typically done via a "Reload" (🔄) button next to the extension's entry on your browser's extension management page.
 
 ## 📖 Usage Guide
 
 1.  **Add Series:**
-    *   Click the extension icon to open the main popup page.
+    *   Click the extension icon in your browser toolbar to open the main popup page.
     *   Navigate to "Options".
-    *   Click "Add New Manhwa" (or similar button).
+    *   Click "Add New Manhwa".
     *   Enter the full URL of the main series page (e.g., `https://somesite.com/series/my-favorite-manhwa`).
-    *   Enter a title for the series.
-    *   The "Last Read Chapter" will default to 0. You can set it manually if you know it.
-    *   If the site uses a non-standard layout, you might need to provide a "Custom CSS Selector" for chapter links (e.g., after inspecting the site's HTML). For many WordPress sites, a default selector is applied.
+    *   Enter a title for the series. Last Read Chapter defaults to 0 but can be set manually.
+    *   If a site needs it, provide a "Custom CSS Selector" for chapter links (found by inspecting the site's HTML). Many WordPress sites use the default selector automatically.
     *   Click "Save".
 2.  **Organize with Bookmarks (Optional):**
-    *   If you want to check series based on your browser's bookmark folders, ensure your tracked series' URLs are bookmarked into relevant folders. The extension will associate series with these folders.
+    *   For folder-based checking, ensure your tracked series' URLs are bookmarked into relevant browser bookmark folders.
 3.  **Check for Updates:**
     *   From the main popup page:
-        *   Click "Quick Check All" to check every series in your list.
-        *   Click "Check Specific Folders...", select the desired bookmark folders from the displayed list, and then click "Start Check for Selected Folders".
+        *   Click "Quick Check All" for all series.
+        *   Click "Check Specific Folders...", select folders, then "Start Check for Selected Folders".
 4.  **View Results:**
-    *   After a check completes, the popup will show a summary (number of new chapters).
-    *   For detailed results, click "View Full Update Log" to open the Updates page. Here you'll see which series have new chapters and which don't, grouped by folder.
+    *   The popup shows a summary. For details, click "View Full Update Log". This page lists series with new chapters and those up-to-date, grouped by folder.
 5.  **Manage List:**
-    *   Return to the "Options" page to edit titles, URLs, last read chapters, selectors, or delete series.
+    *   Go to "Options" to edit titles, URLs, last read chapters, selectors, or delete series.
 6.  **Import/Export:**
-    *   On the "Options" page, use the "Export Manhwa List" button to save your current setup to a JSON file.
-    *   Use "Import Manhwa List" to load a list from a JSON file. This will overwrite your current list after confirmation.
+    *   Use the "Export Manhwa List" and "Import Manhwa List" buttons on the Options page to backup or transfer your settings via a JSON file.
 7.  **Mobile Usage:**
-    *   The workflow is similar. The extension will use its internal history logger. If you need to debug, the "View Custom History (Mobile Only)" button on the popup page can be used.
+    *   The workflow is similar. The extension uses its internal history logger. The "View Custom History (Mobile Only)" button (if visible on mobile) helps with debugging.
 
 ## 🛠️ How It Works (High-Level)
 
@@ -122,7 +214,7 @@ The extension features a "Frutiger Aero" inspired visual theme for a distinct an
 *   **`style.css`**: Shared CSS for theme, responsiveness, and general styling.
 *   **`content_script.js`**: Injected into web pages, mainly for fallback parsing if direct methods fail.
 
-## 🛠️ How It Works (Detailed Architecture)
+## ⚙️ How It Works (Detailed Architecture)
 
 The extension is primarily driven by a background script (`background.js`) that orchestrates checks, parsing, and data management. It interacts with several UI pages for user input and display.
 
@@ -344,7 +436,7 @@ The development of this extension involved tackling several common challenges in
     *   **Bato.to Chapter URLs:** Bato.to's chapter URLs (e.g., `/chapter/CHAPTER_ID`) don't contain the series path (e.g., `/series/SERIES_ID`). This made standard history searches based on `seriesUrl` ineffective for finding read *chapters*.
         *   *Solution:* For Bato.to, history searches were broadened to the hostname, and `seriesTitle` was used to help `_parseChapterFromHistoryItems` filter and accurately identify relevant chapter visits from the larger set of history items.
     *   **Mobile History API:** The `browser.history` API (especially `search()`) can be inconsistent or unavailable on mobile browsers.
-        *   *Solution:* Implementation of a custom, extension-exclusive history logger (`manhwaExtensionHistory`). This logger records all visited URLs, and the extension then parses chapter information from this dedicated log when on a mobile environment.
+        *   *Solution:* Implementation of a custom, extension-exclusive history logger (`manhwaExtensionHistory`). This logger recorded all visited URLs, and the extension then parses chapter information from this dedicated log when on a mobile environment.
 *   **Accurate "Last Read" Detection:** Distinguishing between a series ID in a URL (e.g., on Bato.to) and an actual chapter number required specific exclusion logic in the history parsing functions.
 *   **UI Consistency and Usability:**
     *   Transitioning the popup to a full tab improved usability for folder selection and displaying status.
