@@ -1,0 +1,570 @@
+/* Frutiger Aero Inspired Theme */
+:root {
+    --aero-blue-light: #79bbff; /* Light, airy blue */
+    --aero-blue-medium: #3d9dff; /* Primary button blue */
+    --aero-blue-dark: #007bff;   /* Darker blue for accents/hovers */
+    --aero-glass-bg: rgba(225, 235, 250, 0.7); /* Translucent panel background */
+    --aero-glass-border: rgba(150, 180, 220, 0.5);
+    --aero-text-primary: #0b2d4f; /* Dark blue text */
+    --aero-text-secondary: #335e8b;
+    --aero-highlight: #e0f0ff; /* For button gloss top */
+    --aero-shadow-color: rgba(0, 0, 0, 0.15);
+    --aero-button-shadow: 0 2px 3px var(--aero-shadow-color);
+    --aero-button-inner-shadow: inset 0 1px 1px rgba(255,255,255,0.3);
+
+    --primary-color: var(--aero-blue-medium); 
+    --primary-color-dark: var(--aero-blue-dark);
+    --secondary-color: #b0c4de; /* Light steel blue for secondary actions */
+    --secondary-color-dark: #96aec7;
+    
+    --light-bg: #d4e4f7; /* Light blue page background */
+    --medium-bg: var(--aero-glass-bg); /* For panels like bookmark import */
+    --border-color: var(--aero-glass-border);
+    --dark-text: var(--aero-text-primary);
+    --medium-text: var(--aero-text-secondary);
+    --light-text: #ffffff; /* Text on primary buttons */
+
+    --danger-color: #e74c3c;
+    --danger-color-dark: #c0392b;
+    --success-color: #2ecc71;
+    --success-color-dark: #27ae60;
+    --info-color: #3498db; /* Keeping info fairly standard but can be Aero-fied */
+    --info-color-dark: #2980b9;
+    
+    --font-family: "Segoe UI", Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --border-radius: 6px; /* Slightly more pronounced rounded corners */
+    --box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--dark-text);
+    background-color: var(--light-bg);
+    margin: 0;
+    padding: 15px;
+    font-size: 14px;
+    min-width: 480px; 
+    line-height: 1.5;
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+h1, h2, h3 {
+    color: var(--dark-text);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-weight: 600; /* Slightly bolder headings */
+}
+
+h1 { font-size: 1.85rem; text-shadow: 1px 1px 1px rgba(255,255,255,0.7); } 
+h2 { font-size: 1.6rem; margin-bottom: 1rem; text-shadow: 1px 1px 1px rgba(255,255,255,0.5); } 
+h3 { font-size: 1.35rem; text-shadow: 1px 1px 0px rgba(255,255,255,0.3); } 
+
+a {
+    color: var(--primary-color-dark);
+    text-decoration: none;
+    font-weight: 500;
+}
+a:hover {
+    color: var(--aero-blue-light);
+    text-decoration: underline;
+}
+
+button,
+input[type="submit"],
+input[type="button"],
+.button-like-label { /* Consolidate base style */
+    display: inline-block;
+    font-weight: 500;
+    color: var(--light-text);
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    
+    background-image: linear-gradient(to bottom, var(--aero-highlight) 0%, var(--primary-color) 100%);
+    border: 1px solid var(--aero-blue-dark);
+    
+    padding: 0.45rem 0.9rem; /* Slightly more padding */
+    font-size: 0.95rem; 
+    line-height: 1.5;
+    border-radius: var(--border-radius);
+    box-shadow: var(--aero-button-shadow), var(--aero-button-inner-shadow);
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    transition: all 0.15s ease-out;
+    box-sizing: border-box; 
+}
+
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.button-like-label:hover {
+    background-image: linear-gradient(to bottom, var(--aero-highlight) 0%, var(--primary-color-dark) 100%);
+    border-color: var(--aero-blue-medium);
+    box-shadow: 0 3px 6px var(--aero-shadow-color), var(--aero-button-inner-shadow);
+    transform: translateY(-1px);
+}
+button:focus,
+.button-like-label:focus { /* Added for label */
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(61, 157, 255, .35), var(--aero-button-inner-shadow);
+}
+button:active,
+input[type="submit"]:active,
+input[type="button"]:active,
+.button-like-label:active {
+    background-image: linear-gradient(to top, var(--aero-highlight) 0%, var(--primary-color) 100%);
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.15), var(--aero-button-inner-shadow);
+    transform: translateY(1px);
+}
+
+button:disabled,
+input:disabled { /* This includes submit/button types */
+    background-image: linear-gradient(to bottom, #e0e0e0, #c0c0c0);
+    border-color: #b0b0b0;
+    color: #909090;
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: var(--aero-button-inner-shadow);
+    text-shadow: none;
+    transform: translateY(0);
+}
+
+/* Specific button/label variants */
+.btn-secondary, .button-like-label.btn-secondary {
+    background-image: linear-gradient(to bottom, #f0f0f0, var(--secondary-color));
+    border-color: var(--secondary-color-dark);
+    color: var(--dark-text);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+.btn-secondary:hover, .button-like-label.btn-secondary:hover {
+    background-image: linear-gradient(to bottom, #ffffff, var(--secondary-color-dark));
+    border-color: #788da4;
+}
+
+.btn-danger, .button-like-label.btn-danger {
+    background-image: linear-gradient(to bottom, #ff9a8b, var(--danger-color));
+    border-color: var(--danger-color-dark);
+}
+.btn-danger:hover, .button-like-label.btn-danger:hover {
+    background-image: linear-gradient(to bottom, #ffb4a8, var(--danger-color-dark));
+    border-color: #a03228;
+}
+
+.btn-success, .button-like-label.btn-success {
+    background-image: linear-gradient(to bottom, #a8e063, var(--success-color)); /* Greenish gloss */
+    border-color: var(--success-color-dark);
+}
+.btn-success:hover, .button-like-label.btn-success:hover {
+    background-image: linear-gradient(to bottom, #b8f373, var(--success-color-dark));
+    border-color: #1e8a4c;
+}
+
+.btn-info, .button-like-label.btn-info { /* For consistency */
+    background-image: linear-gradient(to bottom, var(--aero-highlight), var(--info-color));
+    border-color: var(--info-color-dark);
+}
+.btn-info:hover, .button-like-label.btn-info:hover {
+    background-image: linear-gradient(to bottom, var(--aero-highlight), var(--info-color-dark));
+    border-color: #2573a1;
+}
+
+input[type="text"], 
+input[type="url"], 
+input[type="number"], 
+select {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.8rem; /* Slightly increased padding */
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--dark-text);
+    background-color: rgba(255,255,255,0.8); /* Semi-transparent white */
+    background-clip: padding-box;
+    border: 1px solid var(--aero-glass-border);
+    border-radius: 5px; /* Consistent rounding */
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    box-sizing: border-box;
+    margin-bottom: 0.75rem;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+}
+input[type="text"]:focus, 
+input[type="url"]:focus, 
+input[type="number"]:focus, 
+select:focus {
+    border-color: var(--aero-blue-medium);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(61, 157, 255, .25), inset 0 1px 2px rgba(0,0,0,0.07);
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--aero-text-secondary);
+}
+
+small {
+    display: block;
+    font-size: 0.875em;
+    color: var(--aero-text-secondary);
+    margin-top: -0.5rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.9;
+}
+
+.page-header {
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--aero-glass-border);
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0));
+}
+.page-header h1 {
+    margin-bottom: 0;
+}
+
+.section {
+    background-color: var(--aero-glass-bg);
+    padding: 1.2rem; 
+    margin-bottom: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.3);
+    border: 1px solid var(--aero-glass-border);
+    backdrop-filter: blur(2px); /* Subtle blur for glass effect - might not work everywhere */
+}
+
+.section:last-child {
+    margin-bottom: 0;
+}
+.section h2 {
+    font-size: 1.3rem; 
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(150, 180, 220, 0.3); 
+}
+
+.actions {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 0.75rem; /* Slightly more gap */
+    align-items: baseline; 
+}
+
+.status-message {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+}
+.status-message.success {
+    color: #12502e;
+    background-color: #c1f0d2;
+    border-color: #a1d9b6;
+}
+.status-message.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.status-message.info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Options Page Specific */
+#manhwaForm div { /* Already quite generic */
+    margin-bottom: 1rem;
+}
+
+#bookmarkImportSection h3 { /* Match H3 style */
+    font-size: 1.35rem; text-shadow: 1px 1px 0px rgba(255,255,255,0.3);
+}
+
+#manhwaListContainer .manhwa-item {
+    background-color: rgba(240, 245, 255, 0.8); /* Slightly different glass for items */
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--aero-glass-border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+#manhwaListContainer .manhwa-item h3 {
+    font-size: 1.2rem; 
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--aero-blue-dark);
+}
+#manhwaListContainer .manhwa-item p {
+    margin: 0.25rem 0;
+    font-size: 0.9em;
+}
+#manhwaListContainer .manhwa-item p strong {
+    color: var(--aero-text-secondary);
+    font-weight: 500;
+}
+
+#bookmarkImportSection select {
+    margin-bottom: 1rem; /* From base input styles */
+}
+
+#noManhwaMessage { /* Should use status-message classes from JS */
+    text-align: center;
+}
+#noManhwaMessage,
+#dataManagementStatus,
+#bookmarkImportStatus {
+    margin-top: 1rem;
+}
+
+/* Updates Page Specific */
+.updates-header { /* Already handled by .page-header */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.updates-header .actions button {
+    margin-left: 0.5rem;
+}
+
+.folder-group {
+    margin-bottom: 1rem;
+    border: 1px solid var(--aero-glass-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    background-color: var(--aero-glass-bg);
+}
+
+.folder-toggle { /* This is a button, will inherit new button styles */
+    width: 100%;
+    text-align: left;
+    /* Overrides for full width and specific alignment if needed */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Make it look less like a primary action button, more like a panel header */
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+    border-color: var(--aero-glass-border);
+    color: var(--dark-text);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+    font-weight: 600;
+}
+.folder-toggle:hover {
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.2));
+    border-color: var(--aero-blue-light);
+}
+.folder-toggle::after { 
+    content: '\25B8'; 
+    font-size: 0.7em;
+    margin-left: 0.5rem;
+    transition: transform 0.2s ease-in-out;
+    filter: drop-shadow(0 1px 0 rgba(255,255,255,0.5));
+}
+.folder-toggle.active {
+    background-image: linear-gradient(to top, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+}
+.folder-toggle.active::after {
+    transform: rotate(90deg);
+}
+
+.folder-content {
+    padding: 0; 
+    background-color: rgba(255,255,255,0.6); /* Slightly more opaque for content readability */
+}
+
+.folder-content .update-item {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--aero-glass-border); 
+}
+.folder-content .update-item:last-child {
+    border-bottom: none;
+}
+.update-item h3 { /* Already styled */
+    font-size: 1.1rem; 
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+}
+.update-item h3 a {
+    font-weight: 500;
+    color: var(--aero-blue-dark); /* Corrected from --aero-blue-darker */
+}
+.update-item p {
+    margin: 0.125rem 0; 
+    font-size: 0.875em; 
+    color: var(--medium-text);
+}
+.update-item p strong {
+    color: var(--primary-color); 
+    font-weight: bold;
+}
+.update-item p a {
+    font-size: 1em; 
+    font-weight: 500;
+}
+
+#updatesStatus.status-message,
+#noUpdatesMessage.status-message {
+    text-align:center;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        font-size: 13px; /* Slightly smaller base font */
+    }
+
+    .container {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    h1 { font-size: 1.7rem; }
+    h2 { font-size: 1.45rem; }
+    h3 { font-size: 1.25rem; }
+
+    .section {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    button,
+    input[type="submit"],
+    input[type="button"],
+    .button-like-label {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    input[type="text"], 
+    input[type="url"], 
+    input[type="number"], 
+    select {
+        padding: 0.45rem 0.7rem;
+        font-size: 0.85rem;
+    }
+
+    /* For options.html specific layouts if needed */
+    #manhwaForm div label,
+    #manhwaForm div input,
+    #manhwaForm div select,
+    #manhwaForm fieldset {
+        width: 100%; /* Ensure form elements stack and use full width */
+        margin-bottom: 0.5rem;
+    }
+    #manhwaForm small {
+        margin-bottom: 0.5rem;
+    }
+    .actions {
+        display: flex;
+        flex-direction: column; /* Stack buttons in action groups */
+    }
+    .actions button,
+    .actions .button-like-label {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .actions button:last-child,
+    .actions .button-like-label:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Popup specific adjustments */
+    .page-content-wrapper {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        /* max-width will already be 100% effectively due to body padding */
+    }
+    .popup-actions button,
+    #popupStartFolderCheckButton {
+        max-width: 100%; /* Allow buttons to be full width */
+    }
+    #popupFolderSelectionContainer {
+        max-width: 100%;
+        max-height: 150px; /* Slightly reduce height on smaller screens */
+    }
+
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+        font-size: 12px; /* Even smaller base font for phones */
+        min-width: auto; /* Remove min-width constraint */
+    }
+
+    .container {
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.3rem; }
+    h3 { font-size: 1.15rem; }
+
+    .section {
+        padding: 0.75rem;
+        border-radius: calc(var(--border-radius) - 2px); /* Slightly less rounding */
+    }
+
+    button,
+    input[type="submit"],
+    input[type="button"],
+    .button-like-label {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.85rem;
+        border-radius: calc(var(--border-radius) - 2px);
+    }
+
+    input[type="text"], 
+    input[type="url"], 
+    input[type="number"], 
+    select {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+        border-radius: calc(var(--border-radius) - 2px);
+    }
+
+    /* Specific to updates.html tables/lists if they become an issue */
+    .folder-group details summary {
+        padding: 0.4rem;
+    }
+    .update-item {
+        padding: 0.4rem;
+    }
+    .update-item p {
+        font-size: 0.9em; /* Adjust relative font size within items */
+        margin-bottom: 0.25rem;
+    }
+
+    #dataManagementSection .actions button,
+    #dataManagementSection .actions .button-like-label {
+         font-size: 0.8rem; /* Make data management buttons a bit smaller if too crowded */
+    }
+
+    /* Further refine popup styles for very small screens */
+    .page-content-wrapper h3 {
+        font-size: 1.4rem; /* Adjust title specifically if needed */
+    }
+    #popupFolderSelectionContainer {
+        padding: 0.75rem;
+    }
+    #popupFolderSelectionContainer label {
+        font-size: 0.95em;
+    }
+
+}

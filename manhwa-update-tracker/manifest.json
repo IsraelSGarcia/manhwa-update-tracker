@@ -1,0 +1,40 @@
+{
+  "manifest_version": 2,
+  "name": "Manhwa Update Tracker",
+  "version": "1.0.0",
+  "description": "Checks for new chapters of tracked manhwa series, opening some sites in temporary tabs for parsing.",
+  "icons": {
+    "48": "icons/icon-48.png"
+  },
+  "permissions": [
+    "storage",
+    "notifications",
+    "<all_urls>",
+    "bookmarks",
+    "history",
+    "tabs"
+  ],
+  "browser_action": {
+    "default_icon": "icons/icon-48.png"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "arandomemail@gmail.com",
+      "strict_min_version": "57.0"
+    }
+  }
+} 

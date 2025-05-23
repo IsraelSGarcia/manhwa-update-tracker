@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manhwa Updates</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Manhwa Check Status & Updates</h1>
+
+        <div class="status-section">
+            <h2>Overall Status</h2>
+            <p><strong>Status:</strong> <span id="overallCheckStatus">Loading...</span></p>
+            <p><strong>Last Checked At:</strong> <span id="lastCheckedAt">N/A</span></p>
+            <p><strong>Last Check Duration:</strong> <span id="lastCheckDuration">N/A</span></p>
+            <p><strong>Updates Found:</strong> <span id="updatesFoundCount">N/A</span></p>
+            <p><strong id="environmentInfo" style="display: none;">Environment info not available.</strong></p>
+        </div>
+
+        <hr>
+
+        <div class="results-section">
+            <h2>Check Results</h2>
+            
+            <h3>New Chapters</h3>
+            <div id="newChaptersContainer">
+                <p>Loading results or run a check via the extension popup...</p>
+            </div>
+            
+            <h3>No New Chapters</h3>
+            <div id="noNewChaptersContainer">
+                <!-- Results will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="updates.js"></script>
+</body>
+</html> 

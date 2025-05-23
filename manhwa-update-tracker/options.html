@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manhwa Checker Options</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Manhwa Checker Options</h1>
+    </div>
+
+    <div class="section" id="dataManagementSection">
+      <h2>Data Management</h2>
+      <div class="actions">
+        <button type="button" id="exportManhwaListButton">Export Tracked List</button>
+        <label for="importManhwaListFile" class="button-like-label btn-success">
+          Import Tracked List (from file)
+        </label>
+        <input type="file" id="importManhwaListFile" accept=".json" style="display: none;">
+        <button type="button" id="importFromBookmarkFolderSetupButton" class="btn-info">Import from Bookmark Folder</button>
+        <button type="button" id="deleteAllManhwaButton" class="btn-danger">Delete All Tracked Series</button>
+      </div>
+      <div id="dataManagementStatus" class="status-message info" style="margin-top: 1rem;"></div>
+
+      <!-- Section for bookmark folder import -->
+      <div id="bookmarkImportSection" class="hidden" style="margin-top:1rem; padding:1rem; border:1px solid var(--border-color); border-radius: var(--border-radius); background-color: var(--medium-bg);">
+        <h3>Select Bookmark Folder to Import From:</h3>
+        <select id="bookmarkFolderImportSelect">
+          <option value="">Loading folders...</option>
+        </select>
+        <div class="actions" style="margin-top: 1rem;">
+            <button type="button" id="executeBookmarkFolderImportButton">Import Selected Folder</button>
+            <button type="button" id="cancelBookmarkFolderImportButton" class="btn-secondary">Cancel</button>
+        </div>
+        <div id="bookmarkImportStatus" class="status-message info" style="margin-top: 1rem;"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Tracked Manhwa Series</h2>
+      <div id="manhwaListContainer">
+        <!-- Manhwa list will be populated here by options.js -->
+      </div>
+      <div id="noManhwaMessage" class="status-message info hidden">You are not tracking any manhwa series yet.</div>
+    </div>
+
+    <div class="section">
+      <h2 id="formTitle">Add New Manhwa</h2>
+      <form id="manhwaForm">
+        <input type="hidden" id="manhwaId">
+        <div>
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+          <label for="url">URL (Series Page):</label>
+          <input type="url" id="url" name="url" required placeholder="https://example.com/manhwa/series-name">
+        </div>
+        <div>
+          <label for="lastReadChapter">Last Read Chapter:</label>
+          <input type="number" id="lastReadChapter" name="lastReadChapter" value="0" min="0" step="any" required>
+        </div>
+        <div>
+          <label for="latestChapterSelector">CSS Selector (for latest chapter link/element):</label>
+          <input type="text" id="latestChapterSelector" name="latestChapterSelector" required placeholder="e.g., li.wp-manga-chapter a">
+          <small>This selector should point to the element containing the latest chapter number/link on the series page.</small>
+        </div>
+        
+        <fieldset class="section" style="border: 1px solid var(--border-color); padding: 0.75rem; margin-top:1rem;">
+            <legend style="font-weight:500; padding: 0 0.25rem;">Advanced: Auto-detect Read Progress (Experimental)</legend>
+            <div>
+                <label for="userProgressType">Detection Method:</label>
+                <select id="userProgressType" name="userProgressType">
+                    <option value="none" selected>None (Manual Tracking)</option>
+                    <option value="localStorage">localStorage Key</option>
+                    <!-- <option value="cssSelector">CSS Selector (e.g. for 'current-chapter')</option> --> 
+                </select>
+            </div>
+            <div id="localStorageKeyDiv" class="hidden">
+                <label for="userProgressKey">localStorage Key:</label>
+                <input type="text" id="userProgressKey" name="userProgressKey" placeholder="e.g., reading_progress_manhwa_xyz">
+            </div>
+            <!-- Add div for CSS selector if that option is enabled -->
+        </fieldset>
+
+        <div class="actions" style="margin-top: 1rem;">
+          <button type="submit" id="saveButton">Add Manhwa</button>
+          <button type="button" id="cancelEditButton" class="btn-secondary hidden">Cancel Edit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html> 

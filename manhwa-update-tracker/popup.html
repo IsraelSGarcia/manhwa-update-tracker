@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Manhwa Checker - Full View</title>
+  <style>
+    /* Minimal structural and page-specific styles for popup.html (now a full page) */
+    /* Rely on style.css for the Frutiger Aero theme via CSS variables and existing classes */
+
+    body {
+        /* `style.css` already sets body font, color, bg, margin, padding. 
+           No need to override extensively unless for specific page layout like centering. */
+        display: flex; /* For centering .page-content-wrapper */
+        flex-direction: column; /* For centering .page-content-wrapper */
+        align-items: center; /* For centering .page-content-wrapper */
+        min-height: 100vh; /* Ensure it takes at least full viewport height */
+        box-sizing: border-box;
+    }
+
+    .page-content-wrapper {
+        /* This div will use the .section style from style.css for the Aero look */
+        /* Add max-width here for content centering if .section doesn't have it, 
+           or if you want a different max-width than typical .section */
+        max-width: 800px; /* Or your preferred max width for page content */
+        width: 100%; /* Take available width up to max-width */
+        margin-top: 20px; /* Space from top */
+        margin-bottom: 20px; /* Space from bottom */
+        /* .section class will provide padding, bg, border-radius, shadow etc. */
+    }
+
+    /* Adjustments for h3 if needed, or rely on h3 from style.css */
+    .page-content-wrapper h3 {
+        text-align: center; /* Ensure it's centered if not by default */
+        margin-bottom: 1.5rem; /* Match closer to general h2 bottom margin perhaps */
+    }
+
+    .popup-status {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .popup-status p {
+        margin: 0.3rem 0;
+        font-size: 0.95em; /* Slightly smaller for status lines */
+    }
+
+    .popup-actions button,
+    #popupStartFolderCheckButton {
+        /* Buttons will get base styling from style.css */
+        /* Override or add specific styles if needed for this page context */
+        max-width: 350px; /* Max width for buttons on this page */
+        margin-left: auto;  /* Center buttons */
+        margin-right: auto; /* Center buttons */
+        display: block; /* Ensure they take up their own line for centering */
+        margin-top: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    #popupFolderSelectionContainer {
+        /* This is a specific component, style it here but use variables */
+        max-width: 450px;
+        margin: 1rem auto; /* Centering */
+        padding: 1rem;
+        background-color: var(--medium-bg, rgba(225, 235, 250, 0.7)); /* Use theme variable */
+        border: 1px solid var(--border-color, rgba(150, 180, 220, 0.5));
+        border-radius: var(--border-radius, 6px);
+        box-shadow: var(--box-shadow, 0 3px 5px rgba(0,0,0,0.1));
+        max-height: 180px;
+        overflow-y: auto;
+    }
+    #popupFolderSelectionContainer p { /* Text like "Select folders:" */
+        margin-top: 0;
+        margin-bottom: 0.75rem;
+        font-weight: 500; /* From label style in style.css */
+        color: var(--aero-text-secondary, #335e8b);
+    }
+    #popupFolderSelectionContainer div { /* Each checkbox row */
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        padding: 0.3rem;
+        border-radius: 4px;
+    }
+    #popupFolderSelectionContainer div:hover {
+        background-color: rgba(255, 255, 255, 0.2); /* Subtle hover */
+    }
+    #popupFolderSelectionContainer input[type="checkbox"] {
+        margin-right: 0.5rem;
+        transform: scale(1.05); /* Slightly larger */
+        accent-color: var(--primary-color, #3d9dff);
+    }
+    #popupFolderSelectionContainer label {
+         /* Use label styling from style.css by not overriding much */
+        font-weight: normal; /* Override if style.css label is too bold */
+        color: var(--dark-text); 
+    }
+
+    .hidden {
+        display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Use a wrapper that can take .section styling from style.css -->
+  <div class="page-content-wrapper section"> 
+    <h3>Manhwa Checker</h3>
+    
+    <div class="popup-status">
+        <p>Last Check: <span id="popupLastChecked">N/A</span></p>
+        <p>New Chapters: <span id="popupNewChapters">N/A</span></p>
+        <p id="popupCurrentStatus" class="status-message info"></p>
+    </div>
+
+    <div id="popupFolderSelectionContainer" class="hidden">
+        <!-- Checkboxes will be populated here by popup.js -->
+    </div>
+    <!-- This button might look better if grouped with .popup-actions or styled distinctly -->
+    <button id="popupStartFolderCheckButton" class="hidden">Check Selected Folders</button>
+
+    <div class="popup-actions">
+        <button id="popupCheckSpecificFoldersButton" class="button">Check Specific Folders...</button>
+        <button id="popupCheckAllButton">Quick Check All</button>
+        <button id="openUpdatesPageButton" class="button">View Full Update Log</button>
+        <button id="openOptionsButton" class="button">Options</button>
+        <button id="viewCustomHistoryButton" class="button" style="display: none; margin-top: 10px;">View Custom History (Mobile Only)</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html> 
