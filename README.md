@@ -5,16 +5,15 @@
 1.  [Overview](#overview)
 2.  [The Problem Solved](#the-problem-solved)
 3.  [✨ Core Features](#-core-features)
-4.  [🎁 Creating a Distributable File (ZIP or XPI)](#-creating-a-distributable-file-zip-or-xpi)
-5.  [🚀 Installation](#-installation)
-6.  [📖 Usage Guide](#-usage-guide)
-7.  [🛠️ How It Works (High-Level)](#️-how-it-works-high-level)
-8.  [🎨 Styling and Theming](#-styling-and-theming)
-9.  [📂 Key Files and Their Roles](#-key-files-and-their-roles)
-10. [⚙️ How It Works (Detailed Architecture)](#️-how-it-works-detailed-architecture)
-11. [💡 Notable Challenges & Solutions](#-notable-challenges--solutions-during-development)
-12. [❤️ Contributing](#️-contributing)
-13. [📜 License](#-license)
+4.  [🚀 Installation](#-installation)
+5.  [📖 Usage Guide](#-usage-guide)
+6.  [🛠️ How It Works (High-Level)](#️-how-it-works-high-level)
+7.  [🎨 Styling and Theming](#-styling-and-theming)
+8.  [📂 Key Files and Their Roles](#-key-files-and-their-roles)
+9.  [⚙️ How It Works (Detailed Architecture)](#️-how-it-works-detailed-architecture)
+10. [💡 Notable Challenges & Solutions](#-notable-challenges--solutions-during-development)
+11. [❤️ Contributing](#️-contributing)
+12. [📜 License](#-license)
 
 ## Overview
 
@@ -51,61 +50,6 @@ This extension aims to solve these problems by:
 *   **Import/Export Functionality:** Save and load your tracked series list (including all details) as a JSON file.
 *   **Mobile Optimization:** Responsive design for all extension pages.
 *   **Consistent Theming:** A "Frutiger Aero" inspired theme across all UI.
-
-## 🎁 Creating a Distributable File (ZIP or XPI)
-
-If you need to package the extension files, for example, to share it, back it up, or prepare for certain installation methods, you can create a ZIP or an XPI file.
-
-### 1. Creating a ZIP file
-
-A ZIP file is a standard archive format that can be used to bundle the extension files. Most browsers that support loading unpacked extensions can handle a ZIP file if you extract it first.
-
-1.  **Gather all extension files:** Ensure you have all the necessary files and folders for the extension. This includes:
-    *   `manifest.json` (this is crucial)
-    *   All JavaScript files (`background.js`, `popup.js`, `options.js`, etc.)
-    *   All HTML files (`popup.html`, `options.html`, etc.)
-    *   All CSS files (`style.css`, etc.)
-    *   Any assets like icon folders (e.g., `icons/`)
-    *   Any other supporting files or directories at the root level of your extension project.
-2.  **Select the files:** In your file explorer, select all these root files and folders.
-3.  **Create the ZIP archive:**
-    *   **Windows:** Right-click on the selected files, then choose "Send to" > "Compressed (zipped) folder".
-    *   **macOS:** Right-click (or Ctrl-click) on the selected files, then choose "Compress [number] items".
-    *   **Linux:** This varies by distribution and file manager, but typically you can right-click and find a "Compress" or "Create Archive" option. Alternatively, use the `zip` command in the terminal: `zip -r your-extension-name.zip ./*` (make sure you are inside the extension's root directory).
-4.  **Important:** The `manifest.json` file **must be at the root level** inside the ZIP archive, not within a subfolder created by the zipping process (e.g., not like `your-extension-name/manifest.json` inside the zip, but just `manifest.json`).
-
-### 2. Creating an XPI file (for Firefox)
-
-An XPI (pronounced "zippy") file is the installation package format for Firefox add-ons. It's essentially a ZIP file with a different extension.
-
-**Method A: Using `web-ext`**
-
-`web-ext` is a command-line tool developed by Mozilla to help with building, running, and testing WebExtensions.
-
-1.  **Install Node.js and npm:** If you don't have them, install Node.js (which includes npm) from [nodejs.org](https://nodejs.org/).
-2.  **Install `web-ext`:** Open your terminal or command prompt and run:
-    ```bash
-    npm install --global web-ext
-    ```
-3.  **Navigate to your extension's directory:** In the terminal, change to the root directory of your Manhwa Update Tracker extension (the one containing `manifest.json`).
-    ```bash
-    cd path/to/your/manhwa-update-tracker
-    ```
-4.  **Build the extension:** Run the following command:
-    ```bash
-    web-ext build
-    ```
-5.  This command will package your extension into an XPI file. By default, it will be placed in a new directory called `web-ext-artifacts` inside your extension's root directory. The file will likely be named something like `manhwa_checker-0.5.0.xpi` (version number may vary).
-6.  The XPI created by `web-ext build` might be unsigned or self-signed. For distribution on the Mozilla Add-ons (AMO) site, it would need to go through their submission and signing process. For local installation, an unsigned XPI will require the Firefox Developer/Nightly settings mentioned in the Installation section below.
-
-**Method B: Manually Creating an XPI**
-
-If you can't use `web-ext` or prefer a manual approach:
-
-1.  **Create a ZIP file:** Follow all the steps in "1. Creating a ZIP file" above, ensuring `manifest.json` is at the root of the archive.
-2.  **Rename the file:** Simply rename the generated `.zip` file to have an `.xpi` extension. For example, if you have `my-extension.zip`, rename it to `my-extension.xpi`.
-
-    *   **Note:** An XPI file created this way is unsigned. To install it in Firefox, you will typically need to use Firefox Developer Edition or Nightly and set `xpinstall.signatures.required` to `false` in `about:config` (as detailed in the Installation section below).
 
 ## 🚀 Installation
 
